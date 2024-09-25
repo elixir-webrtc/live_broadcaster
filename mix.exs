@@ -44,7 +44,10 @@ defmodule LiveBroadcaster.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      # {:live_ex_webrtc, path: "/home/michal/Repos/elixir-webrtc/live_ex_webrtc"}
+      {:ex_webrtc, github: "elixir-webrtc/ex_webrtc", override: true},
+      {:live_ex_webrtc, github: "elixir-webrtc/live_ex_webrtc"}
     ]
   end
 

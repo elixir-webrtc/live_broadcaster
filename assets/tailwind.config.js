@@ -9,7 +9,9 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/live_broadcaster_web.ex",
-    "../lib/live_broadcaster_web/**/*.*ex"
+    "../lib/live_broadcaster_web/**/*.*ex",
+    "../deps/**/*.ex",
+    "/home/michal/Repos/elixir-webrtc/live_ex_webrtc/**/*.ex",
   ],
   theme: {
     extend: {
