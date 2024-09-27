@@ -20,7 +20,7 @@ if System.get_env("PHX_SERVER") do
   config :live_broadcaster, LiveBroadcasterWeb.Endpoint, server: true
 end
 
-if System.get_env("FLY_IO") do
+if System.get_env("FLY_APP_NAME") do
   config :live_broadcaster, ice_ip_filter: &ExWebRTC.ICE.FlyIpFilter.ip_filter/1
 end
 
