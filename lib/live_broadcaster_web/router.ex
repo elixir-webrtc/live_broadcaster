@@ -17,8 +17,8 @@ defmodule LiveBroadcasterWeb.Router do
   scope "/", LiveBroadcasterWeb do
     pipe_through :browser
 
-    live "/", HomeLive
-    live "/studio", StudioLive
+    live "/", StreamViewerLive
+    live "/streamer", StreamerLive
   end
 
   # Other scopes may use custom stacks.

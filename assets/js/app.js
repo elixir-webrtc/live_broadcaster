@@ -21,12 +21,12 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
-import { createPublisherHook, createSubscriberHook} from "live_ex_webrtc";
+import { createPublisherHook, createPlayerHook} from "live_ex_webrtc";
 
 let Hooks = {};
 const iceServers = [{ urls: "stun:stun.l.google.com:19302" }];
 Hooks.Publisher = createPublisherHook(iceServers);
-Hooks.Subscriber = createSubscriberHook(iceServers);
+Hooks.Player = createPlayerHook(iceServers);
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
