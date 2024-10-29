@@ -45,7 +45,7 @@ defmodule LiveBroadcaster.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:plug_cowboy, "~> 2.5"},
-      {:live_ex_webrtc, github: "elixir-webrtc/live_ex_webrtc", branch: "docs"}
+      {:live_ex_webrtc, "~> 0.3.0"}
     ]
   end
 
