@@ -55,7 +55,7 @@ config :live_broadcaster, LiveBroadcasterWeb.Endpoint,
 config :live_broadcaster, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n", level: :info
+config :logger, :console, format: "[$level] $message\n", level: :debug
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
@@ -66,3 +66,9 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Include HEEx debug annotations as HTML comments in rendered markup
 config :phoenix_live_view, :debug_heex_annotations, true
+
+config :logger,
+  compile_time_purge_matching: [
+    [application: :ex_webrtc, level_lower_than: :debug],
+    [application: :live_ex_webrtc, level_lower_than: :debug]
+  ]

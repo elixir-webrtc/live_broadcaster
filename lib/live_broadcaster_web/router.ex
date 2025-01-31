@@ -18,6 +18,7 @@ defmodule LiveBroadcasterWeb.Router do
     pipe_through :browser
 
     live "/", StreamViewerLive
+    live "/rec", RecordingViewerLive
     live "/streamer", StreamerLive
   end
 

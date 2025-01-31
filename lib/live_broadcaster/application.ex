@@ -1,24 +1,48 @@
 defmodule LiveBroadcaster.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
 
   use Application
 
   @impl true
   def start(_type, _args) do
-    children = [
-      LiveBroadcasterWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:live_broadcaster, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: LiveBroadcaster.PubSub},
-      # Start a worker by calling: LiveBroadcaster.Worker.start_link(arg)
-      # {LiveBroadcaster.Worker, arg},
-      # Start to serve requests, typically the last entry
-      LiveBroadcasterWeb.Endpoint
-    ]
+    children =
+      case FLAME.Parent.get() do
+        %FLAME.Parent{} ->
+          []
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
+        nil ->
+          [
+            LiveBroadcasterWeb.Telemetry,
+            {DNSCluster,
+             query: Application.get_env(:live_broadcaster, :dns_cluster_query) || :ignore},
+            {Phoenix.PubSub, name: LiveBroadcaster.PubSub},
+            {ExWebRTC.Recorder,
+             [
+               # XXX SECRITISE
+               [
+                 base_dir: "./recordings",
+                 on_start: nil,
+                 s3_config: [
+                   bucket_name: "gregorsamsa-rtpx",
+                   scheme: "https://",
+                   host: "fly.storage.tigris.dev",
+                   port: 443,
+                   access_key_id: "[REDACTED]",
+                   secret_access_key: "[REDACTED]"
+                 ]
+               ],
+               [name: LiveBroadcaster.Recorder]
+             ]},
+            {FLAME.Pool,
+             name: LiveBroadcaster.ConverterRunner,
+             min: 0,
+             max: 10,
+             max_concurrency: 5,
+             idle_shutdown_after: 30_000},
+            LiveBroadcasterWeb.Endpoint
+          ]
+      end
+
     opts = [strategy: :one_for_one, name: LiveBroadcaster.Supervisor]
     Supervisor.start_link(children, opts)
   end
