@@ -45,7 +45,7 @@ defmodule LiveBroadcaster.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:plug_cowboy, "~> 2.5"},
-      {:live_ex_webrtc, "~> 0.5.0"}
+      {:live_ex_webrtc, "~> 0.6.0"}
     ]
   end
 
